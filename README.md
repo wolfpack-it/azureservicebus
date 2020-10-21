@@ -40,16 +40,6 @@ Microsoft Azure tables, blobs, queues, service bus (queues and topics), service 
   * deployment: create, get, delete, swap, change configuration, update status, upgrade, rollback
   * role instance: reboot, reimage
   * REST API Version: 2011-10-01
-* Media Services
-  * Connection
-  * Ingest asset, upload files
-  * Encoding / process asset, create job, job templates
-  * Manage media services entities: create / update / read / delete / get list
-  * Delivery SAS and Streaming media content
-  * Dynamic encryption: AES and DRM (PlayReady/Widevine/FairPlay) with and without Token restriction
-  * Scale encoding reserved unit type
-  * Live streaming: live encoding and pass-through channels, programs and all their operations
-  * REST API Version: 2.13
 
 
 # Getting Started
@@ -166,24 +156,6 @@ There are four basic steps that have to be performed before you can make a call 
     ```PHP
     $serviceManagementRestProxy = ServicesBuilder::getInstance()->createServiceManagementService($connectionString);
     ```
-
-  * For Media Services:
-
-    ```PHP
-    // 1 - Instantiate the credentials
-    $credentials = new AzureAdTokenCredentials(
-        '<tenant domain name>',
-        new AzureAdClientSymmetricKey('<service principal client id>', '<service principal client key>'),
-        AzureEnvironments::AZURE_CLOUD_ENVIRONMENT());
-
-    // 2 - Instantiate a token provider
-    $provider = new AzureAdTokenProvider($credentials);
-
-    // 3 - Connect to Azure Media Services
-    $mediaServicesRestProxy = ServicesBuilder::getInstance()->createMediaServicesService(new MediaServicesSettings('<rest api endpoint>', $provider));
-    ```
-    You can find more examples for Media Services Authentication on the [examples](examples/MediaServices/) folder.
-
 ## Table Storage
 
 The following are examples of common operations performed with the Table service. For more please read [How-to use the Table service](http://www.windowsazure.com/en-us/develop/php/how-to-guides/table-service/).
@@ -657,85 +629,6 @@ $result = $serviceManagementRestProxy->createDeployment($hostedServiceName,
 $status = $serviceManagementRestProxy->getOperationStatus($result);
 echo "Operation status: ".$status->getStatus()."<br />";
 ```
-
-## Media Services
-
-### Create new asset with file
-
-To create an asset with a file you need to create an empty asset, create access policy with write permission, create a locator joining your asset and access policy, perform actual upload and generate file info.
-```PHP
-$asset = new Asset(Asset::OPTIONS_NONE);
-$asset = $restProxy->createAsset($asset);
-
-$access = new AccessPolicy('[Some access policy name]');
-$access->setDurationInMinutes([Munites AccessPolicy is valid]);
-$access->setPermissions(AccessPolicy::PERMISSIONS_WRITE);
-$access = $restProxy->createAccessPolicy($access);
-
-$sasLocator = new Locator($asset,  $access, Locator::TYPE_SAS);
-$sasLocator->setStartTime(new \DateTime('now -5 minutes'));
-$sasLocator = $restProxy->createLocator($sasLocator);
-
-$restProxy->uploadAssetFile($sasLocator, '[file name]', '[file content]');
-$restProxy->createFileInfos($asset);
-```
-
-### Encode asset
-
-To perform media file encoding you will need input asset ($inputAsset) with a file in it (something like in previous chapter). Also you need to create an array of task data objects and a job data object. To create a task object use a media processor, task XML body and configuration name.
-```PHP
-$mediaProcessor = $this->restProxy->getLatestMediaProcessor('[Media processor]');
-
-$task = new Task('[Task XML body]', $mediaProcessor->getId(), TaskOptions::NONE);
-$task->setConfiguration('[Configuration name]');
-
-$restProxy->createJob(new Job(), array($inputAsset), array($task));
-```
-
-### Get public URL to encoded asset
-
-After you’ve uploaded a media file and encode it you can get a download URL for that file or a streaming URL for multiple bitrate files. Create a new access policy with read permission and link it with job output asset via locator.
-
-```PHP
-$accessPolicy = new AccessPolicy('[Some access policy name]');
-$accessPolicy->setDurationInMinutes([Munites AccessPolicy is valid]);
-$accessPolicy->setPermissions(AccessPolicy::PERMISSIONS_READ);
-$accessPolicy = $restProxy->createAccessPolicy($accessPolicy);
-
-// Download URL
-$sasLocator = new Locator($asset, $accessPolicy, Locator::TYPE_SAS);
-$sasLocator->setStartTime(new \DateTime('now -5 minutes'));
-$sasLocator = $restProxy->createLocator($sasLocator);
-
-// Azure needs time to publish media
-sleep(30);
-
-$downloadUrl = $sasLocator->getBaseUri() . '/' . '[File name]' . $sasLocator->getContentAccessComponent()
-
-// Streaming URL
-$originLocator = new Locator($asset, $accessPolicy, Locator::TYPE_ON_DEMAND_ORIGIN);
-$originLocator = $restProxy->createLocator($originLocator);
-
-// Azure needs time to publish media
-sleep(30);
-
-$streamingUrl = $originLocator->getPath() . '[Manifest file name]' . "/manifest";
-```
-
-### Manage media services entities
-
-Media services CRUD operations are performed through media services rest proxy class. It has methods like “createAsset”, “createLocator”, “createJob” and etc. for entities creations.
-
-To retrieve all entities list you may use methods “getAssetList”, “getAccessPolicyList”, “getLocatorList”, “getJobList” and etc. For getting single entity data use methods “getAsset”, “getJob”, “getTask” and etc. passing the entity identifier or entity data model object with non-empty identifier as a parameter.
-
-Update entities with methods like “updateLocator”, “updateAsset”, “updateAssetFile” and etc. passing the entity data model object as a parameter. It is important to have valid entity identifier specified in data model object.
-
-Erase entities with methods like “deleteAsset”, “deleteAccessPolicy”, “deleteJob” and etc. passing the entity identifier or entity data model object with non-empty identifier as a parameter.
-
-Also you could get linked entities with methods “getAssetLocators”, “getAssetParentAssets”, “getAssetStorageAccount”, “getLocatorAccessPolicy”, “getJobTasks” and etc. passing the entity identifier or entity data model object with non-empty identifier as a parameter.
-
-The complete list of all methods available you could find in [IMediaServices](src/MediaServices/Internal/IMediaServices.php) interface.
-
 **For more examples please see the [Microsoft Azure PHP Developer Center](http://www.windowsazure.com/en-us/develop/php)**
 
 # Need Help?

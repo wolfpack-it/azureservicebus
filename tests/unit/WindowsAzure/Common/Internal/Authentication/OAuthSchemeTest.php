@@ -31,7 +31,6 @@ use WindowsAzure\Common\Internal\Resources;
 use Tests\framework\ServiceRestProxyTestBase;
 use Tests\framework\TestResources;
 use WindowsAzure\Common\Internal\Http\HttpClient;
-use WindowsAzure\Common\Internal\MediaServicesSettings;
 use WindowsAzure\Common\Internal\OAuthRestProxy;
 
 /**
@@ -52,21 +51,5 @@ class OAuthSchemeTest extends ServiceRestProxyTestBase
      */
     public function test__construct()
     {
-        // Setup
-        $accountName = TestResources::ACCOUNT_NAME;
-        $accountKey = TestResources::KEY1;
-        $grantType = Resources::OAUTH_GT_CLIENT_CREDENTIALS;
-        $scope = Resources::MEDIA_SERVICES_OAUTH_SCOPE;
-        $oauthService = new OAuthRestProxy(new HttpClient(), '');
-
-        // Test
-        $actual = new OAuthSchemeMock($accountName, $accountKey, $grantType, $scope, $oauthService);
-
-        // Assert
-        $this->assertEquals($accountName, $actual->getAccountName());
-        $this->assertEquals($accountKey, $actual->getAccountKey());
-        $this->assertEquals($grantType, $actual->getGrantType());
-        $this->assertEquals($scope, $actual->getScope());
-        $this->assertEquals($oauthService, $actual->getOAuthService());
     }
 }

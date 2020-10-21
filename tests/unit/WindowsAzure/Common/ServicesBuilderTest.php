@@ -27,7 +27,6 @@ namespace Tests\unit\WindowsAzure\Common;
 
 use Tests\Framework\ServiceRestProxyTestBase;
 use Tests\Framework\TestResources;
-use WindowsAzure\Common\Internal\MediaServicesSettings;
 use WindowsAzure\Common\ServicesBuilder;
 
 /**

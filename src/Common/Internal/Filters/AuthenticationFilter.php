@@ -28,7 +28,6 @@ namespace WindowsAzure\Common\Internal\Filters;
 use WindowsAzure\Common\Internal\Resources;
 use WindowsAzure\Common\Internal\IServiceFilter;
 use WindowsAzure\Common\Internal\Http\IHttpClient;
-use WindowsAzure\MediaServices\Authentication\ITokenProvider;
 use Psr\Http\Message\ResponseInterface;
 
 /**

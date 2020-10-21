@@ -97,7 +97,6 @@ spl_autoload_register(
             'tests\\unit\\windowsazure\\common\\models\\loggingtest' => '/unit/WindowsAzure/Common/Models/LoggingTest.php',
             'tests\\unit\\windowsazure\\common\\models\\metricstest' => '/unit/WindowsAzure/Common/Models/MetricsTest.php',
             'tests\\unit\\windowsazure\\common\\models\\oauthaccesstokentest' => '/unit/WindowsAzure/Common/Models/OAuthAccessTokenTest.php',
-            'tests\\unit\\windowsazure\\common\\models\\retentionpolicytest' => '/unit/WindowsAzure/Common/Models/RetentionPolicyTest.php',
             'tests\\unit\\windowsazure\\common\\models\\servicepropertiestest' => '/unit/WindowsAzure/Common/Models/ServicePropertiesTest.php',
             'tests\\unit\\windowsazure\\common\\serviceexceptiontest' => '/unit/WindowsAzure/Common/ServiceExceptionTest.php',
             'tests\\unit\\windowsazure\\common\\servicesbuildertest' => '/unit/WindowsAzure/Common/ServicesBuilderTest.php',

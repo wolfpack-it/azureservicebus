@@ -25,14 +25,6 @@
 
 namespace WindowsAzure\Common;
 
-use MicrosoftAzure\Storage\Blob\Internal\IBlob;
-use MicrosoftAzure\Storage\Queue\Internal\IQueue;
-use MicrosoftAzure\Storage\Table\Internal\AtomReaderWriter;
-use MicrosoftAzure\Storage\Table\Internal\IAtomReaderWriter;
-use MicrosoftAzure\Storage\Table\Internal\IMimeReaderWriter;
-use MicrosoftAzure\Storage\Table\Internal\ITable;
-use MicrosoftAzure\Storage\Table\Internal\MimeReaderWriter;
-use MicrosoftAzure\Storage\Common\ServicesBuilder as StorageServiceBuilder;
 use WindowsAzure\Common\Internal\Authentication\StorageAuthScheme;
 use WindowsAzure\Common\Internal\Http\IHttpClient;
 
@@ -132,32 +124,6 @@ class ServicesBuilder
     }
 
     /**
-     * Gets the Blob authentication scheme.
-     *
-     * @param string $accountName The account name
-     * @param string $accountKey  The account key
-     *
-     * @return \WindowsAzure\Common\Internal\Authentication\StorageAuthScheme
-     */
-    protected function blobAuthenticationScheme($accountName, $accountKey)
-    {
-        return new SharedKeyAuthScheme($accountName, $accountKey);
-    }
-
-    /**
-     * Gets the Table authentication scheme.
-     *
-     * @param string $accountName The account name
-     * @param string $accountKey  The account key
-     *
-     * @return TableSharedKeyLiteAuthScheme
-     */
-    protected function tableAuthenticationScheme($accountName, $accountKey)
-    {
-        return new TableSharedKeyLiteAuthScheme($accountName, $accountKey);
-    }
-
-    /**
      * Builds a WRAP client.
      *
      * @param string $wrapEndpointUri The WRAP endpoint uri
@@ -170,42 +136,6 @@ class ServicesBuilder
         $wrapWrapper = new WrapRestProxy($httpClient, $wrapEndpointUri);
 
         return $wrapWrapper;
-    }
-
-    /**
-     * Builds a queue object.
-     *
-     * @param string $connectionString The configuration connection string
-     *
-     * @return IQueue
-     */
-    public function createQueueService($connectionString)
-    {
-        return StorageServiceBuilder::getInstance()->createQueueService($connectionString);
-    }
-
-    /**
-     * Builds a blob object.
-     *
-     * @param string $connectionString The configuration connection string
-     *
-     * @return IBlob
-     */
-    public function createBlobService($connectionString)
-    {
-        return StorageServiceBuilder::getInstance()->createBlobService($connectionString);
-    }
-
-    /**
-     * Builds a table object.
-     *
-     * @param string $connectionString The configuration connection string
-     *
-     * @return ITable
-     */
-    public function createTableService($connectionString)
-    {
-        return StorageServiceBuilder::getInstance()->createTableService($connectionString);
     }
 
     /**

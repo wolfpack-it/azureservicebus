@@ -23,13 +23,13 @@
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 
-namespace Tests\unit\WindowsAzure\Common\Internal\Filters;
+namespace Tests\unit\AzureServiceBus\Common\Internal\Filters;
 
-use WindowsAzure\Common\Internal\Filters\AuthenticationFilter;
-use WindowsAzure\Common\Internal\Http\HttpClient;
-use WindowsAzure\Common\Internal\Http\Url;
-use WindowsAzure\Common\Internal\Resources;
-use WindowsAzure\Common\Internal\Authentication\SharedKeyAuthScheme;
+use AzureServiceBus\Common\Internal\Filters\AuthenticationFilter;
+use AzureServiceBus\Common\Internal\Http\HttpClient;
+use AzureServiceBus\Common\Internal\Http\Url;
+use AzureServiceBus\Common\Internal\Resources;
+use AzureServiceBus\Common\Internal\Authentication\SharedKeyAuthScheme;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -23,13 +23,12 @@
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 
-namespace Tests\unit\WindowsAzure\Common\Internal;
+namespace Tests\unit\AzureServiceBus\Common\Internal;
 
-use WindowsAzure\Common\Internal\Utilities;
-use WindowsAzure\Common\Internal\Resources;
+use AzureServiceBus\Common\Internal\Utilities;
+use AzureServiceBus\Common\Internal\Resources;
 use Tests\Framework\TestResources;
-use WindowsAzure\Common\Models\ServiceProperties;
-use WindowsAzure\Common\Internal\Serialization\XmlSerializer;
+use AzureServiceBus\Common\Internal\Serialization\XmlSerializer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -48,7 +47,7 @@ use PHPUnit\Framework\TestCase;
 class UtilitiesTest extends TestCase
 {
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::tryGetValue
+     * @covers \AzureServiceBus\Common\Internal\Utilities::tryGetValue
      */
     public function testTryGetValue()
     {
@@ -64,7 +63,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::tryGetValue
+     * @covers \AzureServiceBus\Common\Internal\Utilities::tryGetValue
      */
     public function testTryGetValueUsingDefault()
     {
@@ -80,7 +79,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::tryGetValue
+     * @covers \AzureServiceBus\Common\Internal\Utilities::tryGetValue
      */
     public function testTryGetValueWithNull()
     {
@@ -95,7 +94,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::tryGetKeysChainValue
+     * @covers \AzureServiceBus\Common\Internal\Utilities::tryGetKeysChainValue
      */
     public function testTryGetKeysChainValue()
     {
@@ -121,7 +120,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::startsWith
+     * @covers \AzureServiceBus\Common\Internal\Utilities::startsWith
      */
     public function testStartsWith()
     {
@@ -136,7 +135,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::startsWith
+     * @covers \AzureServiceBus\Common\Internal\Utilities::startsWith
      */
     public function testStartsWithDoesNotStartWithPrefix()
     {
@@ -151,7 +150,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::getArray
+     * @covers \AzureServiceBus\Common\Internal\Utilities::getArray
      */
     public function testGetArray()
     {
@@ -165,7 +164,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::getArray
+     * @covers \AzureServiceBus\Common\Internal\Utilities::getArray
      */
     public function testGetArrayWithFlatValue()
     {
@@ -180,7 +179,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::getArray
+     * @covers \AzureServiceBus\Common\Internal\Utilities::getArray
      */
     public function testGetArrayWithMixtureValue()
     {
@@ -195,7 +194,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::getArray
+     * @covers \AzureServiceBus\Common\Internal\Utilities::getArray
      */
     public function testGetArrayWithEmptyValue()
     {
@@ -209,67 +208,10 @@ class UtilitiesTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::unserialize
-     * @covers \WindowsAzure\Common\Internal\Utilities::_sxml2arr
-     */
-    public function testUnserialize()
-    {
-        // Setup
-        $propertiesSample = TestResources::getServicePropertiesSample();
-        $properties = ServiceProperties::create($propertiesSample);
-        $xmlSerializer = new XmlSerializer();
-        $xml = $properties->toXml($xmlSerializer);
-        $expected = $properties->toArray();
-
-        // Test
-        $actual = Utilities::unserialize($xml);
-
-        $this->assertEquals($expected, $actual);
-    }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::serialize
-     * @covers \WindowsAzure\Common\Internal\Utilities::_arr2xml
-     */
-    public function testSerialize()
-    {
-        // Setup
-        $propertiesSample = TestResources::getServicePropertiesSample();
-        $properties = ServiceProperties::create($propertiesSample);
-        $expected = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
-        $expected .= '<StorageServiceProperties><Logging><Version>1.0</Version><Delete>true</Delete>';
-        $expected .= '<Read>false</Read><Write>true</Write><RetentionPolicy><Enabled>true</Enabled>';
-        $expected .= '<Days>20</Days></RetentionPolicy></Logging><Metrics><Version>1.0</Version>';
-        $expected .= '<Enabled>true</Enabled><IncludeAPIs>false</IncludeAPIs><RetentionPolicy>';
-        $expected .= '<Enabled>true</Enabled><Days>20</Days></RetentionPolicy></Metrics></StorageServiceProperties>';
-        $array = $properties->toArray();
-
-        // Test
-        $actual = Utilities::serialize($array, ServiceProperties::$xmlRootName);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::serialize
-     * @covers \WindowsAzure\Common\Internal\Utilities::_arr2xml
-     */
-    public function testSerializeNoArray()
-    {
-        // Setup
-        $expected = false;
-        $array = 'not an array';
-
-        // Test
-        $actual = Utilities::serialize($array, ServiceProperties::$xmlRootName);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::serialize
-     * @covers \WindowsAzure\Common\Internal\Utilities::_arr2xml
+     * @covers \AzureServiceBus\Common\Internal\Utilities::serialize
+     * @covers \AzureServiceBus\Common\Internal\Utilities::_arr2xml
      */
     public function testSerializeAttribute()
     {
@@ -291,7 +233,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::toBoolean
+     * @covers \AzureServiceBus\Common\Internal\Utilities::toBoolean
      */
     public function testToBoolean()
     {
@@ -308,7 +250,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::booleanToString
+     * @covers \AzureServiceBus\Common\Internal\Utilities::booleanToString
      */
     public function testBooleanToString()
     {
@@ -324,7 +266,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::isoDate
+     * @covers \AzureServiceBus\Common\Internal\Utilities::isoDate
      */
     public function testIsoDate()
     {
@@ -336,7 +278,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::convertToEdmDateTime
+     * @covers \AzureServiceBus\Common\Internal\Utilities::convertToEdmDateTime
      */
     public function testConvertToEdmDateTime()
     {
@@ -348,7 +290,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::convertToDateTime
+     * @covers \AzureServiceBus\Common\Internal\Utilities::convertToDateTime
      */
     public function testConvertToDateTime()
     {
@@ -363,7 +305,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::convertToDateTime
+     * @covers \AzureServiceBus\Common\Internal\Utilities::convertToDateTime
      */
     public function testConvertToDateTimeWithDate()
     {
@@ -378,7 +320,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::stringToStream
+     * @covers \AzureServiceBus\Common\Internal\Utilities::stringToStream
      */
     public function testStringToStream()
     {
@@ -393,7 +335,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::rfc1123ToDateTime
+     * @covers \AzureServiceBus\Common\Internal\Utilities::rfc1123ToDateTime
      */
     public function testWindowsAzureDateToDateTime()
     {
@@ -408,7 +350,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::tryAddUrlScheme
+     * @covers \AzureServiceBus\Common\Internal\Utilities::tryAddUrlScheme
      */
     public function testTryAddUrlSchemeWithScheme()
     {
@@ -423,7 +365,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::tryAddUrlScheme
+     * @covers \AzureServiceBus\Common\Internal\Utilities::tryAddUrlScheme
      */
     public function testTryAddUrlSchemeWithoutScheme()
     {
@@ -439,7 +381,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::startsWith
+     * @covers \AzureServiceBus\Common\Internal\Utilities::startsWith
      */
     public function testStartsWithIgnoreCase()
     {
@@ -455,7 +397,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::inArrayInsensitive
+     * @covers \AzureServiceBus\Common\Internal\Utilities::inArrayInsensitive
      */
     public function testInArrayInsensitive()
     {
@@ -471,7 +413,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::inArrayInsensitive
+     * @covers \AzureServiceBus\Common\Internal\Utilities::inArrayInsensitive
      */
     public function testArrayKeyExistsInsensitive()
     {
@@ -487,7 +429,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::tryGetValueInsensitive
+     * @covers \AzureServiceBus\Common\Internal\Utilities::tryGetValueInsensitive
      */
     public function testTryGetValueInsensitive()
     {
@@ -504,7 +446,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::getGuid
+     * @covers \AzureServiceBus\Common\Internal\Utilities::getGuid
      */
     public function testGetGuid()
     {
@@ -521,7 +463,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::endsWith
+     * @covers \AzureServiceBus\Common\Internal\Utilities::endsWith
      */
     public function testEndsWith()
     {
@@ -538,7 +480,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::generateCryptoKey
+     * @covers \AzureServiceBus\Common\Internal\Utilities::generateCryptoKey
      */
     public function testGenerateCryptoKey()
     {
@@ -554,7 +496,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::ctrCrypt
+     * @covers \AzureServiceBus\Common\Internal\Utilities::ctrCrypt
      */
     public function testCtrCrypt()
     {
@@ -574,7 +516,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::ctrCrypt
+     * @covers \AzureServiceBus\Common\Internal\Utilities::ctrCrypt
      */
     public function testCtrCryptFixedKeys()
     {
@@ -595,7 +537,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::ctrCrypt
+     * @covers \AzureServiceBus\Common\Internal\Utilities::ctrCrypt
      */
     public function testCtrCryptInvalidKeyLength()
     {
@@ -604,7 +546,7 @@ class UtilitiesTest extends TestCase
         $data = 'Test data more than 16 bytes';
         $key = '12345';
         $efectiveInitializationVector = Utilities::generateCryptoKey(8);
-        $this->setExpectedException(get_class(new \InvalidArgumentException('')));
+        $this->expectException(get_class(new \InvalidArgumentException('')));
 
         $initializationVector = str_pad($efectiveInitializationVector, 16, chr(255));
 
@@ -613,7 +555,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::ctrCrypt
+     * @covers \AzureServiceBus\Common\Internal\Utilities::ctrCrypt
      */
     public function testCtrCryptInvalidInitializationVectorLength()
     {
@@ -622,14 +564,14 @@ class UtilitiesTest extends TestCase
         $data = 'Test data more than 16 bytes';
         $key = Utilities::generateCryptoKey(32);
         $initializationVector = '1234';
-        $this->setExpectedException(get_class(new \InvalidArgumentException('')));
+        $this->expectException(get_class(new \InvalidArgumentException('')));
 
         // Test
         $actual = Utilities::ctrCrypt($data, $key, $initializationVector);
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::base256ToDec
+     * @covers \AzureServiceBus\Common\Internal\Utilities::base256ToDec
      */
     public function testBase256ToDecF()
     {
@@ -646,7 +588,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::base256ToDec
+     * @covers \AzureServiceBus\Common\Internal\Utilities::base256ToDec
      */
     public function testBase256ToDec0()
     {
@@ -663,7 +605,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::base256ToDec
+     * @covers \AzureServiceBus\Common\Internal\Utilities::base256ToDec
      */
     public function testBase256ToDec()
     {
@@ -680,7 +622,7 @@ class UtilitiesTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Utilities::base256ToDec
+     * @covers \AzureServiceBus\Common\Internal\Utilities::base256ToDec
      */
     public function testBase256ToDecBig()
     {

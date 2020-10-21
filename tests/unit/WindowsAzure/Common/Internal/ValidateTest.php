@@ -23,12 +23,12 @@
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 
-namespace Tests\unit\WindowsAzure\Common\Internal;
+namespace Tests\unit\AzureServiceBus\Common\Internal;
 
-use WindowsAzure\Common\Internal\Validate;
-use WindowsAzure\Common\Internal\InvalidArgumentTypeException;
-use WindowsAzure\Common\Internal\Resources;
-use WindowsAzure\Common\Internal\Utilities;
+use AzureServiceBus\Common\Internal\Validate;
+use AzureServiceBus\Common\Internal\InvalidArgumentTypeException;
+use AzureServiceBus\Common\Internal\Resources;
+use AzureServiceBus\Common\Internal\Utilities;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -47,7 +47,7 @@ use PHPUnit\Framework\TestCase;
 class ValidateTest extends TestCase
 {
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isArray
+     * @covers \AzureServiceBus\Common\Internal\Validate::isArray
      */
     public function testIsArrayWithArray()
     {
@@ -57,16 +57,16 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isArray
+     * @covers \AzureServiceBus\Common\Internal\Validate::isArray
      */
     public function testIsArrayWithNonArray()
     {
-        $this->setExpectedException(get_class(new InvalidArgumentTypeException('')));
+        $this->expectException(get_class(new InvalidArgumentTypeException('')));
         Validate::isArray(123, 'array');
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isString
+     * @covers \AzureServiceBus\Common\Internal\Validate::isString
      */
     public function testIsStringWithString()
     {
@@ -76,16 +76,16 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isString
+     * @covers \AzureServiceBus\Common\Internal\Validate::isString
      */
     public function testIsStringWithNonString()
     {
-        $this->setExpectedException(get_class(new InvalidArgumentTypeException('')));
+        $this->expectException(get_class(new InvalidArgumentTypeException('')));
         Validate::isString(new \DateTime(), 'string');
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isBoolean
+     * @covers \AzureServiceBus\Common\Internal\Validate::isBoolean
      */
     public function testIsBooleanWithBoolean()
     {
@@ -95,7 +95,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInteger
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInteger
      */
     public function testIsIntegerWithInteger()
     {
@@ -105,16 +105,16 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInteger
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInteger
      */
     public function testIsIntegerWithNonInteger()
     {
-        $this->setExpectedException(get_class(new InvalidArgumentTypeException('')));
+        $this->expectException(get_class(new InvalidArgumentTypeException('')));
         Validate::isInteger(new \DateTime(), 'integer');
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isTrue
+     * @covers \AzureServiceBus\Common\Internal\Validate::isTrue
      */
     public function testIsTrueWithTrue()
     {
@@ -124,16 +124,16 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isTrue
+     * @covers \AzureServiceBus\Common\Internal\Validate::isTrue
      */
     public function testIsTrueWithFalse()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         Validate::isTrue(false, Resources::EMPTY_STRING);
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isDate
+     * @covers \AzureServiceBus\Common\Internal\Validate::isDate
      */
     public function testIsDateWithDate()
     {
@@ -144,16 +144,16 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isDate
+     * @covers \AzureServiceBus\Common\Internal\Validate::isDate
      */
     public function testIsDateWithNonDate()
     {
-        $this->setExpectedException(get_class(new InvalidArgumentTypeException('DateTime')));
+        $this->expectException(get_class(new InvalidArgumentTypeException('DateTime')));
         Validate::isDate('not date', 'date');
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::notNullOrEmpty
+     * @covers \AzureServiceBus\Common\Internal\Validate::notNullOrEmpty
      */
     public function testNotNullOrEmptyWithNonEmpty()
     {
@@ -163,25 +163,25 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::notNullOrEmpty
+     * @covers \AzureServiceBus\Common\Internal\Validate::notNullOrEmpty
      */
     public function testNotNullOrEmptyWithEmpty()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         Validate::notNullOrEmpty(Resources::EMPTY_STRING, 'variable');
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::notNull
+     * @covers \AzureServiceBus\Common\Internal\Validate::notNull
      */
     public function testNotNullWithNull()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         Validate::notNullOrEmpty(null, 'variable');
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInstanceOf
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInstanceOf
      */
     public function testIsInstanceOfStringPasses()
     {
@@ -197,12 +197,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInstanceOf
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInstanceOf
      */
     public function testIsInstanceOfStringFail()
     {
         // Setup
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $value = 'testString';
         $arrayObject = [];
 
@@ -213,7 +213,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInstanceOf
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInstanceOf
      */
     public function testIsInstanceOfArrayPasses()
     {
@@ -229,12 +229,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInstanceOf
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInstanceOf
      */
     public function testIsInstanceOfArrayFail()
     {
         // Setup
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $value = [];
         $stringObject = 'testString';
 
@@ -245,7 +245,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInstanceOf
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInstanceOf
      */
     public function testIsInstanceOfIntPasses()
     {
@@ -261,12 +261,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInstanceOf
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInstanceOf
      */
     public function testIsInstanceOfIntFail()
     {
         // Setup
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $value = 38;
         $stringObject = 'testString';
 
@@ -277,7 +277,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isInstanceOf
+     * @covers \AzureServiceBus\Common\Internal\Validate::isInstanceOf
      */
     public function testIsInstanceOfNullValue()
     {
@@ -293,7 +293,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isDouble
+     * @covers \AzureServiceBus\Common\Internal\Validate::isDouble
      */
     public function testIsDoubleSuccess()
     {
@@ -308,12 +308,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isDouble
+     * @covers \AzureServiceBus\Common\Internal\Validate::isDouble
      */
     public function testIsDoubleFail()
     {
         // Setup
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $value = 'testInvalidDoubleValue';
 
         // Test
@@ -323,7 +323,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isDouble
+     * @covers \AzureServiceBus\Common\Internal\Validate::isDouble
      */
     public function testGetValidateUri()
     {
@@ -335,7 +335,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isValidUri
+     * @covers \AzureServiceBus\Common\Internal\Validate::isValidUri
      */
     public function testIsValidUriPass()
     {
@@ -350,12 +350,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isValidUri
+     * @covers \AzureServiceBus\Common\Internal\Validate::isValidUri
      */
     public function testIsValidUriNull()
     {
         // Setup
-        $this->setExpectedException(get_class(new \RuntimeException('')));
+        $this->expectException(get_class(new \RuntimeException('')));
         $value = null;
 
         // Test
@@ -365,12 +365,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isValidUri
+     * @covers \AzureServiceBus\Common\Internal\Validate::isValidUri
      */
     public function testIsValidUriNotUri()
     {
         // Setup
-        $this->setExpectedException(get_class(new \RuntimeException('')));
+        $this->expectException(get_class(new \RuntimeException('')));
         $value = 'test string';
 
         // Test
@@ -380,7 +380,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isObject
+     * @covers \AzureServiceBus\Common\Internal\Validate::isObject
      */
     public function testIsObjectPass()
     {
@@ -395,12 +395,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isObject
+     * @covers \AzureServiceBus\Common\Internal\Validate::isObject
      */
     public function testIsObjectNull()
     {
         // Setup
-        $this->setExpectedException(get_class(new InvalidArgumentTypeException('')));
+        $this->expectException(get_class(new InvalidArgumentTypeException('')));
         $value = null;
 
         // Test
@@ -410,12 +410,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isObject
+     * @covers \AzureServiceBus\Common\Internal\Validate::isObject
      */
     public function testIsObjectNotObject()
     {
         // Setup
-        $this->setExpectedException(get_class(new InvalidArgumentTypeException('')));
+        $this->expectException(get_class(new InvalidArgumentTypeException('')));
         $value = 'test string';
 
         // Test
@@ -425,13 +425,13 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isA
+     * @covers \AzureServiceBus\Common\Internal\Validate::isA
      */
     public function testIsAResourcesPasses()
     {
         // Setup
         $value = new Resources();
-        $type = 'WindowsAzure\Common\Internal\Resources';
+        $type = 'AzureServiceBus\Common\Internal\Resources';
 
         // Test
         $result = Validate::isA($value, $type, 'value');
@@ -441,14 +441,14 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isA
+     * @covers \AzureServiceBus\Common\Internal\Validate::isA
      */
     public function testIsANull()
     {
         // Setup
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $value = null;
-        $type = 'WindowsAzure\Common\Internal\Resources';
+        $type = 'AzureServiceBus\Common\Internal\Resources';
 
         // Test
         $result = Validate::isA($value, $type, 'value');
@@ -457,12 +457,12 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isA
+     * @covers \AzureServiceBus\Common\Internal\Validate::isA
      */
     public function testIsAInvalidClass()
     {
         // Setup
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $value = new Resources();
         $type = 'Some\Invalid\Class';
 
@@ -473,14 +473,14 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isA
+     * @covers \AzureServiceBus\Common\Internal\Validate::isA
      */
     public function testIsANotAClass()
     {
         // Setup
-        $this->setExpectedException(get_class(new InvalidArgumentTypeException('')));
+        $this->expectException(get_class(new InvalidArgumentTypeException('')));
         $value = 'test string';
-        $type = 'WindowsAzure\Common\Internal\Resources';
+        $type = 'AzureServiceBus\Common\Internal\Resources';
 
         // Test
         $result = Validate::isA($value, $type, 'value');
@@ -489,7 +489,7 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isDateString
+     * @covers \AzureServiceBus\Common\Internal\Validate::isDateString
      */
     public function testIsDateStringValid()
     {
@@ -505,13 +505,13 @@ class ValidateTest extends TestCase
     }
 
     /**
-     * @covers \WindowsAzure\Common\Internal\Validate::isDateString
+     * @covers \AzureServiceBus\Common\Internal\Validate::isDateString
      */
     public function testIsDateStringNotValid()
     {
 
         // Setup
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $value = 'not a date';
 
         // Test

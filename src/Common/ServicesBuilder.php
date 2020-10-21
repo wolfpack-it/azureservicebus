@@ -23,32 +23,32 @@
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 
-namespace WindowsAzure\Common;
+namespace AzureServiceBus\Common;
 
-use WindowsAzure\Common\Internal\Authentication\StorageAuthScheme;
-use WindowsAzure\Common\Internal\Http\IHttpClient;
+use AzureServiceBus\Common\Internal\Authentication\StorageAuthScheme;
+use AzureServiceBus\Common\Internal\Http\IHttpClient;
 
-use WindowsAzure\Common\Internal\Resources;
-use WindowsAzure\Common\Internal\Serialization\ISerializer;
-use WindowsAzure\Common\Internal\Utilities;
-use WindowsAzure\Common\Internal\Http\HttpClient;
-use WindowsAzure\Common\Internal\Filters\HeadersFilter;
-use WindowsAzure\Common\Internal\Filters\AuthenticationFilter;
-use WindowsAzure\Common\Internal\Filters\WrapFilter;
-use WindowsAzure\Common\Internal\Serialization\XmlSerializer;
-use WindowsAzure\Common\Internal\Authentication\SharedKeyAuthScheme;
-use WindowsAzure\Common\Internal\Authentication\TableSharedKeyLiteAuthScheme;
-use WindowsAzure\Common\Internal\ServiceManagementSettings;
-use WindowsAzure\Common\Internal\ServiceBusSettings;
-use WindowsAzure\ServiceBus\Internal\IServiceBus;
-use WindowsAzure\ServiceBus\Internal\IWrap;
-use WindowsAzure\ServiceBus\ServiceBusRestProxy;
-use WindowsAzure\ServiceBus\Internal\WrapRestProxy;
-use WindowsAzure\ServiceManagement\Internal\IServiceManagement;
-use WindowsAzure\ServiceManagement\ServiceManagementRestProxy;
+use AzureServiceBus\Common\Internal\Resources;
+use AzureServiceBus\Common\Internal\Serialization\ISerializer;
+use AzureServiceBus\Common\Internal\Utilities;
+use AzureServiceBus\Common\Internal\Http\HttpClient;
+use AzureServiceBus\Common\Internal\Filters\HeadersFilter;
+use AzureServiceBus\Common\Internal\Filters\AuthenticationFilter;
+use AzureServiceBus\Common\Internal\Filters\WrapFilter;
+use AzureServiceBus\Common\Internal\Serialization\XmlSerializer;
+use AzureServiceBus\Common\Internal\Authentication\SharedKeyAuthScheme;
+use AzureServiceBus\Common\Internal\Authentication\TableSharedKeyLiteAuthScheme;
+use AzureServiceBus\Common\Internal\ServiceManagementSettings;
+use AzureServiceBus\Common\Internal\ServiceBusSettings;
+use AzureServiceBus\ServiceBus\Internal\IServiceBus;
+use AzureServiceBus\ServiceBus\Internal\IWrap;
+use AzureServiceBus\ServiceBus\ServiceBusRestProxy;
+use AzureServiceBus\ServiceBus\Internal\WrapRestProxy;
+use AzureServiceBus\ServiceManagement\Internal\IServiceManagement;
+use AzureServiceBus\ServiceManagement\ServiceManagementRestProxy;
 
-use WindowsAzure\Common\Internal\OAuthRestProxy;
-use WindowsAzure\Common\Internal\Authentication\OAuthScheme;
+use AzureServiceBus\Common\Internal\OAuthRestProxy;
+use AzureServiceBus\Common\Internal\Authentication\OAuthScheme;
 
 /**
  * Builds azure service objects.
@@ -90,25 +90,25 @@ class ServicesBuilder
         return new XmlSerializer();
     }
 
-    /**
-     * Gets the MIME serializer used in the REST services construction.
-     *
-     * @return IMimeReaderWriter
-     */
-    protected function mimeSerializer()
-    {
-        return new MimeReaderWriter();
-    }
+    // /**
+    //  * Gets the MIME serializer used in the REST services construction.
+    //  *
+    //  * @return IMimeReaderWriter
+    //  */
+    // protected function mimeSerializer()
+    // {
+    //     return new MimeReaderWriter();
+    // }
 
-    /**
-     * Gets the Atom serializer used in the REST services construction.
-     *
-     * @return IAtomReaderWriter
-     */
-    protected function atomSerializer()
-    {
-        return new AtomReaderWriter();
-    }
+    // /**
+    //  * Gets the Atom serializer used in the REST services construction.
+    //  *
+    //  * @return IAtomReaderWriter
+    //  */
+    // protected function atomSerializer()
+    // {
+    //     return new AtomReaderWriter();
+    // }
 
     /**
      * Gets the Queue authentication scheme.

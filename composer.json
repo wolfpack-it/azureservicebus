@@ -1,5 +1,5 @@
 {
-    "name": "goavega-software/azureservicebus",
+    "name": "wolfpack-it/azureservicebus",
     "description": "This is a fork of now abandoned windows-azure for Service Bus.",
     "keywords": ["php", "azure", "sdk"],
     "license": "Apache-2.0",
